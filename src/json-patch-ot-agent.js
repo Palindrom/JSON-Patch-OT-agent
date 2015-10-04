@@ -6,6 +6,7 @@
  * @param {Boolean} purity       [description]
  * @constructor
  * @extends {JSONPatchQueue}
+ * @version: 1.0.0
  */
 var JSONPatchOTAgent = function(transform, versionPaths, apply, purity){
 	JSONPatchQueue.call(this, versionPaths, apply, purity);
@@ -29,7 +30,7 @@ JSONPatchOTAgent.prototype.ackLocalVersion = 0;
 /**
  * Wraps JSON Patch sequence with version related operation objects
  * @param  {JSONPatch} sequence JSON Patch sequence to wrap
- * @return {VersionedJSONPatch}          
+ * @return {VersionedJSONPatch}
  */
 JSONPatchOTAgent.prototype.send = function(sequence){
 	var newSequence = sequence.slice(0);
@@ -50,7 +51,7 @@ JSONPatchOTAgent.applyOT = function(callback){
 
         // shift first operation object as it should contain test for our local version.
         // ! We assume correct sequence structure, and queuing applied before.
-        // 
+        //
         // Latest local version acknowledged by remote
         // Thanks to the queue version may only be higher or equal to current.
         var localVersionAckByRemote = consecutivePatch.shift().value;
