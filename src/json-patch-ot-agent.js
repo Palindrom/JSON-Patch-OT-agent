@@ -39,8 +39,9 @@ JSONPatchOTAgent.prototype.send = function(sequence){
 		path: this.remotePath,
 		value: this.remoteVersion
 	});
-	this.pending.push(sequence);
-	return JSONPatchQueue.prototype.send.call(this, newSequence);
+	var versionedJSONPatch = JSONPatchQueue.prototype.send.call(this, newSequence);
+	this.pending.push(versionedJSONPatch);
+    return versionedJSONPatch;
 };
 
 JSONPatchOTAgent.applyOT = function(callback){
