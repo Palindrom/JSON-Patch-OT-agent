@@ -17,7 +17,7 @@ var JSONPatchOTAgent = function(transform, versionPaths, apply, purity){
 	 */
 	this.apply = JSONPatchOTAgent.applyOT( apply );
 	/**
-	 * History of performed JSON Patch sequences that maight not yet be acknowledged by Peer
+	 * History of performed JSON Patch sequences that might not yet be acknowledged by Peer
 	 * @type {Array<JSONPatch>}
 	 */
 	this.pending = [];
@@ -72,4 +72,15 @@ JSONPatchOTAgent.applyOT = function(callback){
         }
         callback(obj, consecutivePatch);
 	};
+};
+
+/**
+ * Reset queue internals and object to new, given state
+ * @param obj object to apply new state to
+ * @param newState versioned object representing desired state along with versions
+ */
+JSONPatchOTAgent.prototype.reset = function(obj, newState){
+	this.ackLocalVersion = newState[this.localPath.replace(/^\//, '')];
+	this.pending = [];
+	JSONPatchQueue.prototype.reset.call(this, obj, newState);
 };
