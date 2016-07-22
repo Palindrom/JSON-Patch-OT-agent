@@ -90,7 +90,7 @@ JSONPatchOTAgent.prototype.receive = function(obj, versionedJsonPatch, applyCall
  * @param newState versioned object representing desired state along with versions
  */
 JSONPatchOTAgent.prototype.reset = function(obj, newState){
-	this.ackLocalVersion = newState[this.localPath.replace(/^\//, '')];
+	this.ackLocalVersion = JSONPatchQueue.getPropertyByJsonPointer(newState, this.localPath);
 	this.pending = [];
 	JSONPatchQueue.prototype.reset.call(this, obj, newState);
 };
