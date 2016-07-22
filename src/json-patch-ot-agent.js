@@ -1,3 +1,6 @@
+if (typeof require !== "undefined" && typeof JSONPatchQueue === 'undefined') {
+	JSONPatchQueue = require('json-patch-queue');
+}
 /**
  * [JSONPatchOTAgent description]
  * @param {Function} transform function(seqenceA, sequences) that transforms `seqenceA` against `sequences`.
@@ -72,3 +75,8 @@ JSONPatchOTAgent.applyOT = function(callback){
         callback(obj, consecutivePatch);
 	};
 };
+
+
+if (typeof module !== "undefined") {
+    module.exports = JSONPatchOTAgent;
+}
