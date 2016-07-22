@@ -1,3 +1,7 @@
+if(typeof JSONPatchOTAgent === 'undefined') {
+  JSONPatchOTAgent = require('../../src/json-patch-ot-agent.js');
+}
+
 var obj;
 
 describe("JSONPatchOTAgent features:", function(){
@@ -47,7 +51,7 @@ describe("JSONPatchOTAgent instance", function () {
       var versionedJSONPatch = [
         {op: 'replace', path: '/remote', value: 1},
         {op: 'test', path: '/local', value: 2}, // OT
-        
+
         {op: 'add', path: '/bar', value: [1, 2, 3]},
         {op: 'replace', path: '/baz', value: 'smth'}
       ];
@@ -60,7 +64,7 @@ describe("JSONPatchOTAgent instance", function () {
       it('should apply given JSON Patch sequence', function() {
         expect(applyPatch).toHaveBeenCalled();
         expect(applyPatch).toHaveBeenCalledWith(
-          obj, 
+          obj,
           [
             {op: 'add', path: '/bar', value: [1, 2, 3]},
             {op: 'replace', path: '/baz', value: 'smth'}
@@ -78,7 +82,7 @@ describe("JSONPatchOTAgent instance", function () {
       var versionedJSONPatch1 = [
         {op: 'replace', path: '/remote', value: 1},
         {op: 'test', path: '/local', value: 1}, // OT
-        
+
         {op: 'replace', path: '/baz', value: 'smth'}
       ];
       beforeEach(function () {
