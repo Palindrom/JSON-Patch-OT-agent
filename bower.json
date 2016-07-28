@@ -1,6 +1,6 @@
 {
   "name": "json-patch-ot-agent",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "homepage": "https://github.com/PuppetJs/JSON-Patch-OT-agent",
   "description": "OT Agent/Queue for JSON-Patch OT - makes sure that your JSON Patches (RFC6902) gets transformed and applied in correct order",
   "authors": [

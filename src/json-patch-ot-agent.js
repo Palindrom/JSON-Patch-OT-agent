@@ -9,7 +9,7 @@ if (typeof require !== "undefined" && typeof JSONPatchQueue === 'undefined') {
  * @param {Boolean} purity       [description]
  * @constructor
  * @extends {JSONPatchQueue}
- * @version: 1.0.0
+ * @version: 1.1.0
  */
 var JSONPatchOTAgent = function(transform, versionPaths, apply, purity){
 	JSONPatchQueue.call(this, versionPaths, apply, purity);
