@@ -13,13 +13,14 @@ describe("JSONPatchOTAgent instance", function () {
     beforeEach(function () {
       agent = new JSONPatchOTAgent(noop, ["/local","/remote"],function(){});
     });
-    it("should push it to `.pending` sequences list",function(){
+    it("should push it to `.pending` sequences list (along with version operation objects)",function(){
       var patch0 = [{op: 'replace', path: '/foo', value: 'smth'}];
       var patch1 = [{op: 'replace', path: '/baz', value: 'smth'}];
       var versionedJSONPatch1 = agent.send(patch0);
       var versionedJSONPatch2 = agent.send(patch1);
-      expect(agent.pending[0]).toEqual(patch0);
-      expect(agent.pending[1]).toEqual(patch1);
+      // first two operation objects are versions
+      expect(agent.pending[0]).toEqual(versionedJSONPatch1);
+      expect(agent.pending[1]).toEqual(versionedJSONPatch2);
     });
     it("should not increment `.ackLocalVersion`",function(){
       var versionedJSONPatch1 = agent.send([{op: 'replace', path: '/baz', value: 'smth'}]);

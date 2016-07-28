@@ -15,7 +15,7 @@ var JSONPatchOTAgent = function(transform, versionPaths, apply, purity){
 	JSONPatchQueue.call(this, versionPaths, apply, purity);
 	this.transform = transform;
 	/**
-	 * History of performed JSON Patch sequences that maight not yet be acknowledged by Peer
+	 * History of performed JSON Patch sequences that might not yet be acknowledged by Peer
 	 * @type {Array<JSONPatch>}
 	 */
 	this.pending = [];
@@ -37,8 +37,9 @@ JSONPatchOTAgent.prototype.send = function(sequence){
 		path: this.remotePath,
 		value: this.remoteVersion
 	});
-	this.pending.push(sequence);
-	return JSONPatchQueue.prototype.send.call(this, newSequence);
+	var versionedJSONPatch = JSONPatchQueue.prototype.send.call(this, newSequence);
+	this.pending.push(versionedJSONPatch);
+    return versionedJSONPatch;
 };
 
 
@@ -81,6 +82,17 @@ JSONPatchOTAgent.prototype.receive = function(obj, versionedJsonPatch, applyCall
 	        }
 	    	apply(obj, consecutivePatch);
 		});
+};
+
+/**
+ * Reset queue internals and object to new, given state
+ * @param obj object to apply new state to
+ * @param newState versioned object representing desired state along with versions
+ */
+JSONPatchOTAgent.prototype.reset = function(obj, newState){
+	this.ackLocalVersion = JSONPatchQueue.getPropertyByJsonPointer(newState, this.localPath);
+	this.pending = [];
+	JSONPatchQueue.prototype.reset.call(this, obj, newState);
 };
 
 if (typeof module !== "undefined") {
