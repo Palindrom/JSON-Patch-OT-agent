@@ -26,7 +26,7 @@ describe("JSONPatchOTAgent instance", function () {
       expect(queue.ackLocalVersion).toEqual(1);
     });
     it('should clear pending list', function () {
-      var queue = new JSONPatchOTAgent(noop, git ["/local","/remote"],noop);
+      var queue = new JSONPatchOTAgent(noop, ["/local","/remote"],noop);
       queue.reset({}, {local: 1, remote: 2, name: 'newname'});
       expect(queue.pending).toEqual([]);
     });
