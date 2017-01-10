@@ -17,7 +17,7 @@ Install the component using [Bower](http://bower.io/):
 $ bower install json-patch-ot-agent --save
 ```
 
-Or [download as ZIP](https://github.com/PuppetJs/JSON-Patch-OT-Agent/archive/gh-pages.zip).
+Or [download as ZIP](https://github.com/PuppetJs/JSON-Patch-OT-Agent/archive/master.zip).
 
 ## Usage
 
