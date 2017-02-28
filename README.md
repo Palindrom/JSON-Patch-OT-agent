@@ -17,7 +17,7 @@ Install the component using [Bower](http://bower.io/):
 $ bower install json-patch-ot-agent --save
 ```
 
-Or [download as ZIP](https://github.com/PuppetJs/JSON-Patch-OT-Agent/archive/master.zip).
+Or [download as ZIP](https://github.com/Palindrom/JSON-Patch-OT-Agent/archive/master.zip).
 
 ## Usage
 
@@ -36,7 +36,7 @@ myQueue.receive(myObject, reveivedVersionedPatch);
 
 ## Requirements
 
-Agent requires a specific `transform` function (as a first argument), if you do not have your own, we advise you [JSON-Patch-OT](https://github.com/PuppetJs/JSON-Patch-OT) (`bower install json-patch-ot`).
+Agent requires a specific `transform` function (as a first argument), if you do not have your own, we advise you [JSON-Patch-OT](https://github.com/Palindrom/JSON-Patch-OT) (`bower install json-patch-ot`).
 You will also need function to apply JSON Patch, we suggest [fast JSON Patch](https://github.com/Starcounter-Jack/JSON-Patch) (`bower install fast-json-patch`).
 
 ## Methods
@@ -71,7 +71,7 @@ Name      | Type                          | Description
 
 ## History
 
-For detailed changelog, check [Releases](https://github.com/PuppetJs/JSON-Patch-OT-Agent/releases).
+For detailed changelog, check [Releases](https://github.com/Palindrom/JSON-Patch-OT-Agent/releases).
 
 ## License
 
@@ -79,6 +79,6 @@ MIT
 
 ## See also
 - [fast JSON Patch](https://github.com/Starcounter-Jack/JSON-Patch)
-- [JSON Patch Queue](https://github.com/PuppetJs/JSON-Patch-Queue)
-- [JSON Patch OT](https://github.com/PuppetJs/JSON-Patch-OT)
-- ...putting it all together: [PuppetJs](https://github.com/PuppetJs/PuppetJs)
+- [JSON Patch Queue](https://github.com/Palindrom/JSON-Patch-Queue)
+- [JSON Patch OT](https://github.com/Palindrom/JSON-Patch-OT)
+- ...putting it all together: [Palindrom](https://github.com/Palindrom/Palindrom)

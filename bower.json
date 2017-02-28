@@ -1,7 +1,7 @@
 {
   "name": "json-patch-ot-agent",
   "version": "1.1.0",
-  "homepage": "https://github.com/PuppetJs/JSON-Patch-OT-agent",
+  "homepage": "https://github.com/Palindrom/JSON-Patch-OT-agent",
   "description": "OT Agent/Queue for JSON-Patch OT - makes sure that your JSON Patches (RFC6902) gets transformed and applied in correct order",
   "authors": [
     "Tomek Wytrebowicz <tomalecpub@gmail.com>"
@@ -27,6 +27,6 @@
     "fast-json-patch": "~0.5.0"
   },
   "dependencies":{
-    "json-patch-queue": "PuppetJs/JSON-Patch-queue#master"
+    "json-patch-queue": "Palindrom/JSON-Patch-queue#master"
   }
 }
