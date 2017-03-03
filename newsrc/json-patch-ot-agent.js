@@ -1,8 +1,5 @@
-console.warn('Please use the production version in `dist` folder, this file will be removed soon');
+var JSONPatchQueue = require('json-patch-queue');
 
-if (typeof require !== "undefined" && typeof JSONPatchQueue === 'undefined') {
-	JSONPatchQueue = require('json-patch-queue');
-}
 /**
  * [JSONPatchOTAgent description]
  * @param {Function} transform function(seqenceA, sequences) that transforms `seqenceA` against `sequences`.
@@ -97,6 +94,5 @@ JSONPatchOTAgent.prototype.reset = function(obj, newState){
 	JSONPatchQueue.prototype.reset.call(this, obj, newState);
 };
 
-if (typeof module !== "undefined") {
-    module.exports = JSONPatchOTAgent;
-}
+module.exports = JSONPatchOTAgent;
+module.exports.default = JSONPatchOTAgent;
