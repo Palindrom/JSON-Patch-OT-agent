@@ -5,7 +5,7 @@
   "main": "dist/json-patch-ot-agent.js",
   "typings": "index.d.ts",
   "scripts": {
-    "test": "jasmine JASMINE_CONFIG_PATH=test/jasmine.json"
+    "test": "jasmine test/spec/*.js"
   },
   "repository": {
     "type": "git",
