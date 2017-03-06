@@ -1,6 +1,8 @@
 # JSON-Patch-OT-Agent
 > Makes your JSON Patch application sequential
 
+[![Build Status](https://travis-ci.org/Palindrom/JSON-Patch-OT-agent.svg?branch=master)](https://travis-ci.org/Palindrom/JSON-Patch-OT-agent)
+
 Implements a queue of JSON Patches, based on [Versioned JSON Patch](https://github.com/tomalec/Versioned-JSON-Patch) convention, that will resolve a problem of sequential application of JSON Patches.
 
 ## Demo
