@@ -1,8 +1,12 @@
-console.warn('Please use the production version in `dist` folder, this file will be removed soon');
-
-if (typeof require !== "undefined" && typeof JSONPatchQueue === 'undefined') {
-	JSONPatchQueue = require('json-patch-queue');
+if(typeof JSONPatchQueue === 'undefined') {
+	if(typeof require !== 'undefined') {
+		var JSONPatchQueue = require('json-patch-queue').JSONPatchQueue;
+	}
+	else {
+		throw new Error('You need to reference JSONPatchQueue before JSONPatchOTAgent');
+	}
 }
+
 /**
  * [JSONPatchOTAgent description]
  * @param {Function} transform function(seqenceA, sequences) that transforms `seqenceA` against `sequences`.
@@ -11,7 +15,7 @@ if (typeof require !== "undefined" && typeof JSONPatchQueue === 'undefined') {
  * @param {Boolean} purity       [description]
  * @constructor
  * @extends {JSONPatchQueue}
- * @version: 1.1.0
+ * @version: 1.1.2
  */
 var JSONPatchOTAgent = function(transform, versionPaths, apply, purity){
 	JSONPatchQueue.call(this, versionPaths, apply, purity);
@@ -96,7 +100,8 @@ JSONPatchOTAgent.prototype.reset = function(obj, newState){
 	this.pending = [];
 	JSONPatchQueue.prototype.reset.call(this, obj, newState);
 };
-
-if (typeof module !== "undefined") {
-    module.exports = JSONPatchOTAgent;
+if(typeof module !== 'undefined') {
+	module.exports = JSONPatchOTAgent;
+	module.exports.default = JSONPatchOTAgent;
+	module.exports.__esModule = true;
 }
