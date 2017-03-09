@@ -1,5 +1,5 @@
 if(typeof JSONPatchOTAgent === 'undefined') {
-  JSONPatchOTAgent = require('../../dist/json-patch-ot-agent.js');
+  JSONPatchOTAgent = require('../../src/json-patch-ot-agent.js');
 }
 
 var obj;

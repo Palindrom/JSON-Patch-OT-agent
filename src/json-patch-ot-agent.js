@@ -1,4 +1,11 @@
-var JSONPatchQueue = require('json-patch-queue');
+if(typeof JSONPatchQueue === 'undefined') {
+	if(typeof require !== 'undefined') {
+		var JSONPatchQueue = require('json-patch-queue');
+	}
+	else {
+		throw new Error('You need to reference JSONPatchQueue before JSONPatchOTAgent');
+	}
+}
 
 /**
  * [JSONPatchOTAgent description]
@@ -93,6 +100,8 @@ JSONPatchOTAgent.prototype.reset = function(obj, newState){
 	this.pending = [];
 	JSONPatchQueue.prototype.reset.call(this, obj, newState);
 };
-
-module.exports = JSONPatchOTAgent;
-module.exports.default = JSONPatchOTAgent;
+if(typeof module !== 'undefined') {
+	module.exports = JSONPatchOTAgent;
+	module.exports.default = JSONPatchOTAgent;
+	module.exports.__esModule = true;
+}

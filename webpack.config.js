@@ -4,7 +4,18 @@ module.exports = [
   {
     entry: "./src/json-patch-ot-agent.js",
     output: {
-      filename: "dist/json-patch-ot-agent.min.js",
+      filename: "dist/json-patch-ot-agent.bundle.js",
+      library: "JSONPatchOTAgent",
+      libraryTarget: "var"
+    },
+    resolve: {
+      extensions: [".js"]
+    }
+  },
+  {
+    entry: "./src/json-patch-ot-agent.js",
+    output: {
+      filename: "dist/json-patch-ot-agent.bundle.min.js",
       library: "JSONPatchOTAgent",
       libraryTarget: "var"
     },
@@ -18,16 +29,5 @@ module.exports = [
         }
       })
     ]
-  },
-  {
-    entry: "./src/json-patch-ot-agent.js",
-    output: {
-      filename: "dist/json-patch-ot-agent.js",
-      library: "JSONPatchOTAgent",
-      libraryTarget: "commonjs2"
-    },
-    resolve: {
-      extensions: [".js"]
-    }
   }
 ];

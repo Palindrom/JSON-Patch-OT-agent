@@ -2,7 +2,7 @@
   "name": "json-patch-ot-agent",
   "version": "1.1.0",
   "description": "OT Agent/Queue for JSON-Patch OT - makes sure that your JSON Patches (RFC6902) gets transformed and applied in correct order",
-  "main": "dist/json-patch-ot-agent.js",
+  "main": "src/json-patch-ot-agent.js",
   "typings": "index.d.ts",
   "scripts": {
     "test": "jasmine test/spec/*.js"
@@ -29,6 +29,8 @@
     "node": ">= 0.4.0"
   },
   "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-bump": "^0.8.0",
     "jasmine": "^2.4.1",
     "webpack": "^2.2.1"
   },

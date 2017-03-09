@@ -1,4 +1,4 @@
-module.exports =
+var JSONPatchOTAgent =
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -216,7 +216,14 @@ if (true) {
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var JSONPatchQueue = __webpack_require__(0);
+if(typeof JSONPatchQueue === 'undefined') {
+	if(true) {
+		var JSONPatchQueue = __webpack_require__(0);
+	}
+	else {
+		throw new Error('You need to reference JSONPatchQueue before JSONPatchOTAgent');
+	}
+}
 
 /**
  * [JSONPatchOTAgent description]
@@ -311,10 +318,11 @@ JSONPatchOTAgent.prototype.reset = function(obj, newState){
 	this.pending = [];
 	JSONPatchQueue.prototype.reset.call(this, obj, newState);
 };
-
-module.exports = JSONPatchOTAgent;
-module.exports.default = JSONPatchOTAgent;
-
+if(true) {
+	module.exports = JSONPatchOTAgent;
+	module.exports.default = JSONPatchOTAgent;
+	module.exports.__esModule = true;
+}
 
 /***/ })
 /******/ ]);
