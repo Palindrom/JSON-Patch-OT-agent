@@ -35,6 +35,6 @@
     "webpack": "^2.2.1"
   },
   "dependencies": {
-    "json-patch-queue": "palindrom/JSON-Patch-Queue#master"
+    "json-patch-queue": "^2.0.0"
   }
 }

@@ -1,6 +1,6 @@
 if(typeof JSONPatchQueue === 'undefined') {
 	if(typeof require !== 'undefined') {
-		JSONPatchQueue = require('json-patch-queue');
+		var JSONPatchQueue = require('json-patch-queue').JSONPatchQueue;
 	}
 	else {
 		throw new Error('You need to reference JSONPatchQueue before JSONPatchOTAgent');
