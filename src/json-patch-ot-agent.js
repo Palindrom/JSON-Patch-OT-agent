@@ -9,13 +9,13 @@ if(typeof JSONPatchQueue === 'undefined') {
 
 /**
  * [JSONPatchOTAgent description]
+ * version: 1.1.0
  * @param {Function} transform function(seqenceA, sequences) that transforms `seqenceA` against `sequences`.
  * @param {Array<JSON-Pointer>} versionPaths JSON-Pointers to version numbers [local, remote]
  * @param {function} apply    apply(JSONobj, JSONPatchSequence) function to apply JSONPatch to object.
  * @param {Boolean} purity       [description]
  * @constructor
  * @extends {JSONPatchQueue}
- * @version: 1.1.0
  */
 var JSONPatchOTAgent = function(transform, versionPaths, apply, purity){
 	JSONPatchQueue.call(this, versionPaths, apply, purity);
