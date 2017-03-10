@@ -9,7 +9,7 @@ if(typeof JSONPatchQueue === 'undefined') {
 
 /**
  * [JSONPatchOTAgent description]
- * version: 1.1.0
+ * @version: 1.1.1
  * @param {Function} transform function(seqenceA, sequences) that transforms `seqenceA` against `sequences`.
  * @param {Array<JSON-Pointer>} versionPaths JSON-Pointers to version numbers [local, remote]
  * @param {function} apply    apply(JSONobj, JSONPatchSequence) function to apply JSONPatch to object.
