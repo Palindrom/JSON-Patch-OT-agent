@@ -32,7 +32,6 @@
     "grunt": "^1.0.1",
     "grunt-bump": "^0.8.0",
     "jasmine": "^2.4.1",
-    "webpack": "^2.2.1"
   },
   "dependencies": {
     "json-patch-queue": "^2.0.0"
