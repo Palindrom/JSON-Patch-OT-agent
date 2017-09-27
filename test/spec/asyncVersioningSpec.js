@@ -9,24 +9,24 @@ describe("JSONPatchOTAgent instance", function () {
   var noop = function(){};
 
   it('should be created with versions 0,0 by default', function() {
-    var queue = new JSONPatchOTAgent(noop, ["/local","/remote"],function(){});
+    var queue = new JSONPatchOTAgent({}, noop, ["/local","/remote"],function(){});
     expect(queue.localVersion).toEqual(0);
     expect(queue.remoteVersion).toEqual(0);
   });
 
   describe('when reset', function () {
     it('should set local ack version to value given', function () {
-      var queue = new JSONPatchOTAgent(noop, ["/local","/remote"],noop);
+      var queue = new JSONPatchOTAgent({}, noop, ["/local","/remote"],noop);
       queue.reset({}, {local: 1, remote: 2});
       expect(queue.ackLocalVersion).toEqual(1);
     });
     it('should set remote version to value given even with complex version path', function () {
-      var queue = new JSONPatchOTAgent(noop, ["/v/local","/v/remote"],noop);
+      var queue = new JSONPatchOTAgent({}, noop, ["/v/local","/v/remote"],noop);
       queue.reset({}, {v: {local: 1, remote: 2}});
       expect(queue.ackLocalVersion).toEqual(1);
     });
     it('should clear pending list', function () {
-      var queue = new JSONPatchOTAgent(noop, ["/local","/remote"],noop);
+      var queue = new JSONPatchOTAgent({}, noop, ["/local","/remote"],noop);
       queue.reset({}, {local: 1, remote: 2, name: 'newname'});
       expect(queue.pending).toEqual([]);
     });
@@ -36,7 +36,7 @@ describe("JSONPatchOTAgent instance", function () {
     var queue, applyPatch;
     beforeEach(function () {
       applyPatch = jasmine.createSpy("applyPatch");
-      queue = new JSONPatchOTAgent(noop, ["/local","/remote"],function(){
+      queue = new JSONPatchOTAgent({}, noop, ["/local","/remote"],function(){
         applyPatch.apply(this, arguments);
       });
     });
@@ -51,13 +51,13 @@ describe("JSONPatchOTAgent instance", function () {
       ];
 
       beforeEach(function () {
-        obj = {foo: 1, baz: [{qux: 'hello'}]};
-        queue.receive(obj, versionedJSONPatch3);
+        queue.obj = {foo: 1, baz: [{qux: 'hello'}]};
+        queue.receive(versionedJSONPatch3);
       });
 
       it('should not apply given JSON Patch sequence', function() {
         expect(applyPatch).not.toHaveBeenCalled()
-        expect(obj).toEqual({foo: 1, baz: [{qux: 'hello'}]})
+        expect(queue.obj).toEqual({foo: 1, baz: [{qux: 'hello'}]})
       });
       it('should place JSON Patch sequence in `.waiting` array, according to versions distance', function() {
         expect(queue.waiting).toContain([
@@ -103,25 +103,25 @@ describe("JSONPatchOTAgent instance", function () {
       ];
 
       beforeEach(function () {
-        obj = {foo: 1, baz: [{qux: 'hello'}]};
+        queue.obj = {foo: 1, baz: [{qux: 'hello'}]};
         //add something to the queue
-        queue.receive(obj, versionedJSONPatch2);
-        queue.receive(obj, versionedJSONPatch3);
+        queue.receive(versionedJSONPatch2);
+        queue.receive(versionedJSONPatch3);
         // receive consecutive patch
-        queue.receive(obj, versionedJSONPatch1);
+        queue.receive(versionedJSONPatch1);
 
       });
 
       it('should apply given JSON Patch sequence', function() {
-        expect(applyPatch).toHaveBeenCalledWith(obj, [{op: 'replace', path: '/baz', value: 'smth'}]);
-        expect(applyPatch.calls.argsFor(0)).toEqual([obj, [{op: 'replace', path: '/baz', value: 'smth'}]]);
+        expect(applyPatch).toHaveBeenCalledWith(queue.obj, [{op: 'replace', path: '/baz', value: 'smth'}]);
+        expect(applyPatch.calls.argsFor(0)).toEqual([queue.obj, [{op: 'replace', path: '/baz', value: 'smth'}]]);
       });
       it('should apply queued, consecutive Patch sequences', function() {
         expect(applyPatch.calls.count()).toEqual(3);
         expect(applyPatch.calls.allArgs()).toEqual([
-          [obj, [{op: 'replace', path: '/baz', value: 'smth'}]],// JSONPatch1
-          [obj, [{op: 'add', path: '/bar', value: [1, 2, 3]}]],// JSONPatch2
-          [obj, [{op: 'replace', path: '/bool', value: false}]]// JSONPatch3
+          [queue.obj, [{op: 'replace', path: '/baz', value: 'smth'}]],// JSONPatch1
+          [queue.obj, [{op: 'add', path: '/bar', value: [1, 2, 3]}]],// JSONPatch2
+          [queue.obj, [{op: 'replace', path: '/bool', value: false}]]// JSONPatch3
         ]);
       });
       it('should update `remoteVersion` accordingly', function() {
@@ -133,8 +133,6 @@ describe("JSONPatchOTAgent instance", function () {
     describe("with remote's version lower or equal to current `remoteVersion`", function () {
 
       it('should throw an error', function() {
-
-
         var versionedJSONPatch1 = [
           {op: 'replace', path: '/remote', value: 1},
           {op: 'test', path: '/local', value: 0}, // OT
@@ -148,11 +146,11 @@ describe("JSONPatchOTAgent instance", function () {
           {op: 'add', path: '/bar', value: [1, 2, 3]}
         ];
         // apply some change
-        queue.receive(obj, versionedJSONPatch1);
+        queue.receive(versionedJSONPatch1);
         // try to apply same
-        expect(function(){queue.receive(obj, versionedJSONPatch1);}).toThrow();
+        expect(function(){queue.receive(versionedJSONPatch1);}).toThrow();
         // try to apply lower
-        expect(function(){queue.receive(obj, versionedJSONPatch0);}).toThrow();
+        expect(function(){queue.receive(versionedJSONPatch0);}).toThrow();
       });
     });
   });
@@ -160,7 +158,7 @@ describe("JSONPatchOTAgent instance", function () {
   describe("when sends a JSON Patch", function () {
     var queue;
     beforeEach(function () {
-      queue = new JSONPatchOTAgent(noop, ["/local","/remote"],function(){});
+      queue = new JSONPatchOTAgent({}, noop, ["/local","/remote"],function(){});
     });
     it("should increment `.localVersion`",function(){
       var versionedJSONPatch1 = queue.send([{op: 'replace', path: '/baz', value: 'smth'}]);
@@ -177,7 +175,7 @@ describe("JSONPatchOTAgent instance", function () {
       var versionedJSONPatch1 = queue.send([{op: 'replace', path: '/baz', value: 'smth'}]);
       expect(versionedJSONPatch1[0].path).toEqual("/local");
        expect(versionedJSONPatch1[1].path).toEqual("/remote"); // OT
-      queue = new JSONPatchOTAgent(noop, ["/meta/client","/meta/server"]);
+      queue = new JSONPatchOTAgent({}, noop, ["/meta/client","/meta/server"]);
       var versionedJSONPatch2 = queue.send([{op: 'replace', path: '/baz', value: 'smth'}]);
       expect(versionedJSONPatch2[0].path).toEqual("/meta/client");
        expect(versionedJSONPatch2[1].path).toEqual("/meta/server"); // OT
@@ -206,7 +204,7 @@ describe("JSONPatchOTAgent instance", function () {
   describe("in purist mode", function () {
     var queue;
     beforeEach(function () {
-      queue = new JSONPatchOTAgent(noop, ["/local","/remote"],function(){}, true);
+      queue = new JSONPatchOTAgent({}, noop, ["/local","/remote"],function(){}, true);
     });
     it("should send consecutiveness test for local version",function(){
       var versionedJSONPatch1 = queue.send([{op: 'replace', path: '/foo', value: 'smth'}]);
@@ -216,7 +214,7 @@ describe("JSONPatchOTAgent instance", function () {
 
     it("should receive consecutiveness test from remote",function(){
       expect(function(){
-        queue.receive(obj, [
+        queue.receive([
           {op: 'test', path: '/remote', value: 0},
           {op: 'replace', path: '/remote', value: 1},
           {op: 'test', path: '/local', value: 0}, // OT

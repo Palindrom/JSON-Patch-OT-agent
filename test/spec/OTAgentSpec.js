@@ -11,7 +11,7 @@ describe("JSONPatchOTAgent instance", function () {
   describe("when sends a JSON Patch", function () {
     var agent;
     beforeEach(function () {
-      agent = new JSONPatchOTAgent(noop, ["/local","/remote"],function(){});
+      agent = new JSONPatchOTAgent({}, noop, ["/local","/remote"],function(){});
     });
     it("should push it to `.pending` sequences list (along with version operation objects)",function(){
       var patch0 = [{op: 'replace', path: '/foo', value: 'smth'}];
@@ -40,7 +40,7 @@ describe("JSONPatchOTAgent instance", function () {
       var apply = function apply(){
         applyPatch.apply(this, arguments);
       }
-      agent = new JSONPatchOTAgent(transform, ["/local","/remote"], apply);
+      agent = new JSONPatchOTAgent({}, transform, ["/local","/remote"], apply);
       agent.localVersion = 2;
       agent.pending = [
         [{op: 'replace', path: '/foo', value: 1}],
@@ -58,14 +58,14 @@ describe("JSONPatchOTAgent instance", function () {
       ];
 
       beforeEach(function () {
-        obj = {foo: 1, baz: [{qux: 'hello'}]};
-        agent.receive(obj, versionedJSONPatch);
+        agent.obj = {foo: 1, baz: [{qux: 'hello'}]};
+        agent.receive(versionedJSONPatch);
       });
 
       it('should apply given JSON Patch sequence', function() {
         expect(applyPatch).toHaveBeenCalled();
         expect(applyPatch).toHaveBeenCalledWith(
-          obj,
+          agent.obj,
           [
             {op: 'add', path: '/bar', value: [1, 2, 3]},
             {op: 'replace', path: '/baz', value: 'smth'}
@@ -87,8 +87,8 @@ describe("JSONPatchOTAgent instance", function () {
         {op: 'replace', path: '/baz', value: 'smth'}
       ];
       beforeEach(function () {
-        obj = {foo: 1, baz: [{qux: 'hello'}]};
-        agent.receive(obj, versionedJSONPatch1);
+        agent.obj = {foo: 1, baz: [{qux: 'hello'}]};
+        agent.receive(versionedJSONPatch1);
 
       });
 
@@ -104,7 +104,7 @@ describe("JSONPatchOTAgent instance", function () {
       it('should apply transformed JSON Patch sequence', function() {
         expect(applyPatch.calls.count()).toEqual(1);
         expect(applyPatch).toHaveBeenCalledWith(
-          obj,
+          agent.obj,
           [{op:"add", path: "/transformed", value: "JSON Patch sequence"}] // transformed JSON Patch
           );
       });

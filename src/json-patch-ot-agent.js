@@ -9,6 +9,7 @@ if(typeof JSONPatchQueue === 'undefined') {
 
 /**
  * [JSONPatchOTAgent description]
+ * @param {Object} Obj The target object where patches are applied
  * @param {Function} transform function(seqenceA, sequences) that transforms `seqenceA` against `sequences`.
  * @param {Array<JSON-Pointer>} versionPaths JSON-Pointers to version numbers [local, remote]
  * @param {function} apply    apply(JSONobj, JSONPatchSequence) function to apply JSONPatch to object.
@@ -17,8 +18,8 @@ if(typeof JSONPatchQueue === 'undefined') {
  * @extends {JSONPatchQueue}
  * @version: 1.1.2
  */
-var JSONPatchOTAgent = function(transform, versionPaths, apply, purity){
-	JSONPatchQueue.call(this, versionPaths, apply, purity);
+var JSONPatchOTAgent = function(obj, transform, versionPaths, apply, purity){
+	JSONPatchQueue.call(this, obj, versionPaths, apply, purity);
 	this.transform = transform;
 	/**
 	 * History of performed JSON Patch sequences that might not yet be acknowledged by Peer
@@ -56,12 +57,12 @@ JSONPatchOTAgent.prototype.send = function(sequence){
  * @param  {JSONPatch} versionedJsonPatch patch to be applied
  * @param  {Function} [applyCallback]     optional `function(object, consecutiveTransformedPatch)` to be called when applied, if not given #apply will be called
  */
-JSONPatchOTAgent.prototype.receive = function(obj, versionedJsonPatch, applyCallback){
+JSONPatchOTAgent.prototype.receive = function(versionedJsonPatch, applyCallback){
 	var apply = applyCallback || this.apply,
 		queue = this;
 
-	return JSONPatchQueue.prototype.receive.call(this, obj, versionedJsonPatch,
-		function applyOT(obj, remoteVersionedJsonPatch){
+	return JSONPatchQueue.prototype.receive.call(this, versionedJsonPatch,
+		function applyOT(remoteVersionedJsonPatch){
 			// console.log("applyPatch", queue, arguments);
 	        // transforming / applying
 	        var consecutivePatch = remoteVersionedJsonPatch.slice(0);
@@ -84,10 +85,9 @@ JSONPatchOTAgent.prototype.receive = function(obj, versionedJsonPatch, applyCall
 	                    consecutivePatch,
 	                    queue.pending
 	                );
-
-	        }
-	    	apply(obj, consecutivePatch);
-		});
+			}
+			apply(this.obj, consecutivePatch);
+		}.bind(this));
 };
 
 /**
@@ -98,7 +98,7 @@ JSONPatchOTAgent.prototype.receive = function(obj, versionedJsonPatch, applyCall
 JSONPatchOTAgent.prototype.reset = function(obj, newState){
 	this.ackLocalVersion = JSONPatchQueue.getPropertyByJsonPointer(newState, this.localPath);
 	this.pending = [];
-	JSONPatchQueue.prototype.reset.call(this, obj, newState);
+	return this.obj = JSONPatchQueue.prototype.reset.call(this, obj, newState);
 };
 if(typeof module !== 'undefined') {
 	module.exports = JSONPatchOTAgent;
