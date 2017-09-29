@@ -39,6 +39,7 @@ describe("JSONPatchOTAgent instance", function () {
       applyPatch = jasmine.createSpy("applyPatch");
       var apply = function apply(){
         applyPatch.apply(this, arguments);
+        return arguments[0]; //obj
       }
       agent = new JSONPatchOTAgent({}, transform, ["/local","/remote"], apply);
       agent.localVersion = 2;

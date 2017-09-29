@@ -62,7 +62,7 @@ JSONPatchOTAgent.prototype.receive = function(versionedJsonPatch, applyCallback)
 		queue = this;
 
 	return JSONPatchQueue.prototype.receive.call(this, versionedJsonPatch,
-		function applyOT(remoteVersionedJsonPatch){
+		function applyOT(obj, remoteVersionedJsonPatch){
 			// console.log("applyPatch", queue, arguments);
 	        // transforming / applying
 	        var consecutivePatch = remoteVersionedJsonPatch.slice(0);
@@ -86,8 +86,8 @@ JSONPatchOTAgent.prototype.receive = function(versionedJsonPatch, applyCallback)
 	                    queue.pending
 	                );
 			}
-			apply(this.obj, consecutivePatch);
-		}.bind(this));
+			return queue.obj = apply(queue.obj, consecutivePatch);
+		});
 };
 
 /**

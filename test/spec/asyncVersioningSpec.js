@@ -21,7 +21,7 @@ describe("JSONPatchOTAgent instance", function () {
       expect(queue.ackLocalVersion).toEqual(1);
     });
     it('should set remote version to value given even with complex version path', function () {
-      var queue = new JSONPatchOTAgent({}, noop, ["/v/local","/v/remote"],noop);
+      var queue = new JSONPatchOTAgent({}, noop, ["/v/local","/v/remote"], noop);
       queue.reset({}, {v: {local: 1, remote: 2}});
       expect(queue.ackLocalVersion).toEqual(1);
     });
@@ -38,6 +38,7 @@ describe("JSONPatchOTAgent instance", function () {
       applyPatch = jasmine.createSpy("applyPatch");
       queue = new JSONPatchOTAgent({}, noop, ["/local","/remote"],function(){
         applyPatch.apply(this, arguments);
+        return arguments[0]; // obj
       });
     });
 

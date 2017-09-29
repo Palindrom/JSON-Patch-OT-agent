@@ -32,16 +32,17 @@ Or [download as ZIP](https://github.com/Palindrom/JSON-Patch-OT-Agent/archive/ma
 ## Usage
 
 ```javascript
+var targetObject = {};
 // create queue
-var myQueue = new new JSONPatchOTAgent(
+var myQueue = new new JSONPatchOTAgent(targetObject,
                 jsonpatchTransform,
                 ['/localVersion', '/remoteVersion'],
                 jsonpatch
              );
 // to compose versioned JSON Patch, to be send somewhere?
-var versionedPatchToBeSent = myQueue.send(regularpatch);
+var versionedPatchToBeSent = myQueue.send(regularPatch);
 // to apply/queue/transform received versioned JSON Patch
-myQueue.receive(myObject, reveivedVersionedPatch);
+myQueue.receive(receivedVersionedPatch);
 ```
 
 ## Requirements
@@ -54,10 +55,9 @@ You will also need function to apply JSON Patch, we suggest [fast JSON Patch](ht
 Name      | Arguments                     | Default | Description
 ---       | ---                           | ---     | ---
 `send`    | *JSONPatch* sequence          |         | Changes given JSON Patch to Versioned JSON Patch
-`receive` |                               |         | Receives, and eventually applies given Versioned JSON Patch, to the object
-          | *Object* obj                  |         | object to be changed
-          | *VersionedJSONPatch* sequence |         | Versioned JSON Patch to be queued and applied
-`JSONPatchQueue`  | *Function* transform |         |  `function(pacth, againstPatch_es)` function to transform given JSON Patch agains others
+`receive` | *VersionedJSONPatch* sequence |         | Versioned JSON Patch to be queued and applied
+`JSONPatchQueue`  | *Object* obj          |         | Target object where patches are applied
+`JSONPatchQueue`  | *Function* transform |         |  `function(patch, againstPatch_es)` function to transform given JSON Patch against others
                   | *Array* *JSONPointer* [localVersionPath, remoteVersionPath] |         | Paths where to store the versions
                   | *Function* apply     |         | `function(object, patch)` function to apply JSON Patch
                   | *Boolean* purist     | `false` | set to `true` to enable pure/unoptimized Versioned JSON Patch convention
@@ -66,6 +66,7 @@ Name      | Arguments                     | Default | Description
 
 Name      | Type                          | Description
 ---       | ---                           | ---
+`obj`     |  *`Object`* obj               | Target object where patches are applied
 `waiting` | *Array* *JSONPatch*           | Array of JSON Patches waiting in queue
 `localVersion` | *Number*           | local version
 `remoteVersion` | *Number*           | acknowledged remote version
