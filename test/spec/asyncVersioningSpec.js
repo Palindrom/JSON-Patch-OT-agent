@@ -17,17 +17,17 @@ describe("JSONPatchOTAgent instance", function () {
   describe('when reset', function () {
     it('should set local ack version to value given', function () {
       var queue = new JSONPatchOTAgent({}, noop, ["/local","/remote"],noop);
-      queue.reset({}, {local: 1, remote: 2});
+      queue.reset({local: 1, remote: 2});
       expect(queue.ackLocalVersion).toEqual(1);
     });
     it('should set remote version to value given even with complex version path', function () {
       var queue = new JSONPatchOTAgent({}, noop, ["/v/local","/v/remote"], noop);
-      queue.reset({}, {v: {local: 1, remote: 2}});
+      queue.reset({v: {local: 1, remote: 2}});
       expect(queue.ackLocalVersion).toEqual(1);
     });
     it('should clear pending list', function () {
       var queue = new JSONPatchOTAgent({}, noop, ["/local","/remote"],noop);
-      queue.reset({}, {local: 1, remote: 2, name: 'newname'});
+      queue.reset({local: 1, remote: 2, name: 'newname'});
       expect(queue.pending).toEqual([]);
     });
   });

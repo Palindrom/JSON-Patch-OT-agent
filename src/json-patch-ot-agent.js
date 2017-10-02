@@ -92,13 +92,12 @@ JSONPatchOTAgent.prototype.receive = function(versionedJsonPatch, applyCallback)
 
 /**
  * Reset queue internals and object to new, given state
- * @param obj object to apply new state to
  * @param newState versioned object representing desired state along with versions
  */
-JSONPatchOTAgent.prototype.reset = function(obj, newState){
+JSONPatchOTAgent.prototype.reset = function(newState){
 	this.ackLocalVersion = JSONPatchQueue.getPropertyByJsonPointer(newState, this.localPath);
 	this.pending = [];
-	return this.obj = JSONPatchQueue.prototype.reset.call(this, obj, newState);
+	return this.obj = JSONPatchQueue.prototype.reset.call(this, newState);
 };
 if(typeof module !== 'undefined') {
 	module.exports = JSONPatchOTAgent;
