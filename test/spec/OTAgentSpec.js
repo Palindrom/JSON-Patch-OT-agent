@@ -30,6 +30,7 @@ describe("JSONPatchOTAgent instance", function () {
 
   describe("when receives a Versioned JSON Patch", function () {
     var agent, applyPatch, transformPatch;
+    var obj = {foo: 1, baz: [{qux: 'hello'}]};
     beforeEach(function () {
       transformPatch = jasmine.createSpy("transformPatch");
       var transform = function transform(){
@@ -41,7 +42,7 @@ describe("JSONPatchOTAgent instance", function () {
         applyPatch.apply(this, arguments);
         return arguments[0]; //obj
       }
-      agent = new JSONPatchOTAgent({}, transform, ["/local","/remote"], apply);
+      agent = new JSONPatchOTAgent(obj, transform, ["/local","/remote"], apply);
       agent.localVersion = 2;
       agent.pending = [
         [{op: 'replace', path: '/foo', value: 1}],
@@ -59,14 +60,13 @@ describe("JSONPatchOTAgent instance", function () {
       ];
 
       beforeEach(function () {
-        agent.obj = {foo: 1, baz: [{qux: 'hello'}]};
         agent.receive(versionedJSONPatch);
       });
 
       it('should apply given JSON Patch sequence', function() {
         expect(applyPatch).toHaveBeenCalled();
         expect(applyPatch).toHaveBeenCalledWith(
-          agent.obj,
+          obj,
           [
             {op: 'add', path: '/bar', value: [1, 2, 3]},
             {op: 'replace', path: '/baz', value: 'smth'}
@@ -88,7 +88,6 @@ describe("JSONPatchOTAgent instance", function () {
         {op: 'replace', path: '/baz', value: 'smth'}
       ];
       beforeEach(function () {
-        agent.obj = {foo: 1, baz: [{qux: 'hello'}]};
         agent.receive(versionedJSONPatch1);
 
       });
@@ -105,7 +104,7 @@ describe("JSONPatchOTAgent instance", function () {
       it('should apply transformed JSON Patch sequence', function() {
         expect(applyPatch.calls.count()).toEqual(1);
         expect(applyPatch).toHaveBeenCalledWith(
-          agent.obj,
+          obj,
           [{op:"add", path: "/transformed", value: "JSON Patch sequence"}] // transformed JSON Patch
           );
       });

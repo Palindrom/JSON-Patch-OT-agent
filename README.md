@@ -57,10 +57,10 @@ Name      | Arguments                     | Default | Description
 `send`    | *JSONPatch* sequence          |         | Changes given JSON Patch to Versioned JSON Patch
 `receive` | *VersionedJSONPatch* sequence |         | Versioned JSON Patch to be queued and applied
 `JSONPatchQueue`  | *Object* obj          |         | Target object where patches are applied
-`JSONPatchQueue`  | *Function* transform |         |  `function(patch, againstPatch_es)` function to transform given JSON Patch against others
-                  | *Array* *JSONPointer* [localVersionPath, remoteVersionPath] |         | Paths where to store the versions
-                  | *Function* apply     |         | `function(object, patch)` function to apply JSON Patch
-                  | *Boolean* purist     | `false` | set to `true` to enable pure/unoptimized Versioned JSON Patch convention
+__  | *Function* transform |         |  `function(patch, againstPatch_es)` function to transform given JSON Patch against others
+__  |*Array* *JSONPointer* [localVersionPath, remoteVersionPath] |         | Paths where to store the versions
+  __             | *Function* apply     |         | `function(object, patch)` function to apply JSON Patch, must return the final state of the object
+ __                 | *Boolean* purist     | `false` | set to `true` to enable pure/unoptimized Versioned JSON Patch convention
 
 ## Properties
 

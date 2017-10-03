@@ -9,11 +9,11 @@ if(typeof JSONPatchQueue === 'undefined') {
 
 /**
  * [JSONPatchOTAgent description]
- * @param {Object} Obj The target object where patches are applied
+ * @param {Object} obj The target object where patches are applied
  * @param {Function} transform function(seqenceA, sequences) that transforms `seqenceA` against `sequences`.
  * @param {Array<JSON-Pointer>} versionPaths JSON-Pointers to version numbers [local, remote]
- * @param {function} apply    apply(JSONobj, JSONPatchSequence) function to apply JSONPatch to object.
- * @param {Boolean} purity       [description]
+ * @param {function} apply apply(JSONobj, JSONPatchSequence) function to apply JSONPatch to object. Must return the final state of the object.
+ * @param {Boolean} purity 
  * @constructor
  * @extends {JSONPatchQueue}
  * @version: 1.1.2
@@ -53,9 +53,9 @@ JSONPatchOTAgent.prototype.send = function(sequence){
 /**
  * Process received versioned JSON Patch
  * Adds to queue, transform and apply when applicable.
- * @param  {Object} obj                   object to apply patches to
+ * @param  {Object} obj object to apply patches to
  * @param  {JSONPatch} versionedJsonPatch patch to be applied
- * @param  {Function} [applyCallback]     optional `function(object, consecutiveTransformedPatch)` to be called when applied, if not given #apply will be called
+ * @param  {Function} [applyCallback] optional `function(object, consecutiveTransformedPatch)` to be called when applied, must return the final state of the object, if not given #apply will be called
  */
 JSONPatchOTAgent.prototype.receive = function(versionedJsonPatch, applyCallback){
 	var apply = applyCallback || this.apply,
