@@ -16,7 +16,7 @@ if(typeof JSONPatchQueue === 'undefined') {
  * @param {Boolean} purity 
  * @constructor
  * @extends {JSONPatchQueue}
- * @version: 1.1.2
+ * @version: 2.0.0-rc.0
  */
 var JSONPatchOTAgent = function(obj, transform, versionPaths, apply, purity){
 	JSONPatchQueue.call(this, obj, versionPaths, apply, purity);
