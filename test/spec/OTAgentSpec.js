@@ -131,7 +131,7 @@ if (typeof Benchmark !== 'undefined') {
     }
   });
   suite.add(suite.name + ' call transform against 1 of 2 pending sequences', function () {
-    banchAgent.receive(obj, [
+    banchAgent.receive([
       {op: 'replace', path: '/remote', value: remoteCounter},
       {op: 'test', path: '/local', value: 1}, // OT
       {op: 'replace', path: '/foo', value: [1, 2, 3, 4]}
@@ -141,10 +141,10 @@ if (typeof Benchmark !== 'undefined') {
 
   },{
     onStart: function(){
-      banchAgent = new JSONPatchOTAgent(noop, ["/local","/remote"],function(){});
       obj = {foo: 1, baz: [
         {qux: 'hello'}
       ]};
+      banchAgent = new JSONPatchOTAgent(obj, noop, ["/local","/remote"],function(){});
       remoteCounter = 1;
       localCounter = 2;
       banchAgent.localVersion = 2;
@@ -155,7 +155,7 @@ if (typeof Benchmark !== 'undefined') {
     }
   });
   suite.add(suite.name + ' call transform against 7 of 10 pending sequences', function () {
-    banchAgent.receive(obj, [
+    banchAgent.receive([
       {op: 'replace', path: '/remote', value: remoteCounter},
       {op: 'test', path: '/local', value: 1}, // OT
       {op: 'replace', path: '/foo', value: [1, 2, 3, 4]}
@@ -165,10 +165,10 @@ if (typeof Benchmark !== 'undefined') {
 
   },{
     onStart: function(){
-      banchAgent = new JSONPatchOTAgent(noop, ["/local","/remote"],function(){});
       obj = {foo: 1, baz: [
         {qux: 'hello'}
       ]};
+      banchAgent = new JSONPatchOTAgent(obj, noop, ["/local","/remote"],function(){});
       remoteCounter = 1;
       localCounter = 3;
       banchAgent.localVersion = 3;
