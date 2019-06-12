@@ -241,7 +241,7 @@ if (typeof Benchmark !== 'undefined') {
     }
   });
   suite.add(suite.name + ' receive operation sequence (replace)', function () {
-    banchQueue.receive(obj, [
+    banchQueue.receive([
       {op: 'replace', path: '/remote', value: remoteCounter},
       {op: 'test', path: '/local', value: localCounter}, // OT
       {op: 'replace', path: '/foo', value: [1, 2, 3, 4]}
@@ -251,16 +251,16 @@ if (typeof Benchmark !== 'undefined') {
 
   },{
     onStart: function(){
-      banchQueue = new JSONPatchOTAgent(noop, ["/local","/remote"],function(){});
       obj = {foo: 1, baz: [
         {qux: 'hello'}
       ]};
+      banchQueue = new JSONPatchOTAgent(obj, noop, ["/local","/remote"],function(){});
       remoteCounter = 1;
       localCounter = 0;
     }
   });
   suite.add(suite.name + ' queue received operation sequence', function () {
-    banchQueue.receive(obj, [
+    banchQueue.receive([
       {op: 'replace', path: '/remote', value: remoteCounter},
       {op: 'test', path: '/local', value: localCounter}, // OT
       {op: 'replace', path: '/foo', value: [1, 2, 3, 4]}
@@ -270,10 +270,10 @@ if (typeof Benchmark !== 'undefined') {
 
   },{
     onStart: function(){
-      banchQueue = new JSONPatchOTAgent(noop, ["/local","/remote"],function(){});
       obj = {foo: 1, baz: [
         {qux: 'hello'}
       ]};
+      banchQueue = new JSONPatchOTAgent(obj, noop, ["/local","/remote"],function(){});
       remoteCounter = 2;
       localCounter = 0;
     }
@@ -286,14 +286,14 @@ if (typeof Benchmark !== 'undefined') {
     ]);
   },{
     onStart: function(){
-      banchQueue = new JSONPatchOTAgent(noop, ["/local","/remote"],function(){});
+      banchQueue = new JSONPatchOTAgent({}, noop, ["/local","/remote"],function(){});
       remoteCounter = 0;
       localCounter = 0;
     }
   });
 
   suite.add(suite.name + ' purist receive operation sequence (replace)', function () {
-    banchQueue.receive(obj, [
+    banchQueue.receive([
       {op: 'test', path: '/remote', value: remoteCounter-1}, //purist
       {op: 'replace', path: '/remote', value: remoteCounter},
        {op: 'test', path: '/local', value: localCounter}, // OT
@@ -304,10 +304,10 @@ if (typeof Benchmark !== 'undefined') {
 
   },{
     onStart: function(){
-      banchQueue = new JSONPatchOTAgent(noop, ["/local","/remote"],function(){}, true);
       obj = {foo: 1, baz: [
         {qux: 'hello'}
       ]};
+      banchQueue = new JSONPatchOTAgent(obj, noop, ["/local","/remote"],function(){}, true);
       remoteCounter = 1;
       localCounter = 0;
     }
@@ -318,7 +318,7 @@ if (typeof Benchmark !== 'undefined') {
     ]);
   },{
     onStart: function(){
-      banchQueue = new JSONPatchOTAgent(noop, ["/local","/remote"],function(){}, true);
+      banchQueue = new JSONPatchOTAgent({}, noop, ["/local","/remote"],function(){}, true);
       remoteCounter = 0;
       localCounter = 0;
     }
