@@ -19,13 +19,17 @@
   <script src="lib/benchmark_reporter.js"></script>
   <link rel="stylesheet" type="text/css" href="lib/benchmark_reporter.css">
 
-  <!-- include source files here... -->
-  <script src="../node_modules/json-patch-queue/src/json-patch-queue.js"></script>
-  <script src="../src/json-patch-ot-agent.js"></script>
+  <script type="importmap">
+    {
+        "imports": {
+            "json-patch-queue": ["/node_modules/json-patch-queue/src/json-patch-queue.js"]
+        }
+    }
+  </script>
 
   <!-- include spec files here... -->
-  <script src="spec/asyncVersioningSpec.js"></script>
-  <script src="spec/OTAgentSpec.js"></script>
+  <script type="module" src="spec/asyncVersioningSpec.js"></script>
+  <script type="module" src="spec/OTAgentSpec.js"></script>
 
 
 </head>
