@@ -1,11 +1,4 @@
-if(typeof JSONPatchQueue === 'undefined') {
-	if(typeof require !== 'undefined') {
-		var JSONPatchQueue = require('json-patch-queue').JSONPatchQueue;
-	}
-	else {
-		throw new Error('You need to reference JSONPatchQueue before JSONPatchOTAgent');
-	}
-}
+import { JSONPatchQueue } from 'json-patch-queue';
 
 /**
  * [JSONPatchOTAgent description]
@@ -99,8 +92,5 @@ JSONPatchOTAgent.prototype.reset = function(newState){
 	this.pending = [];
 	return this.obj = JSONPatchQueue.prototype.reset.call(this, newState);
 };
-if(typeof module !== 'undefined') {
-	module.exports = JSONPatchOTAgent;
-	module.exports.default = JSONPatchOTAgent;
-	module.exports.__esModule = true;
-}
+export default JSONPatchOTAgent;
+export { JSONPatchOTAgent };

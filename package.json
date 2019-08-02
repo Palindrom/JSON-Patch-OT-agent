@@ -3,9 +3,10 @@
   "version": "2.0.0-rc.0",
   "description": "OT Agent/Queue for JSON-Patch OT - makes sure that your JSON Patches (RFC6902) gets transformed and applied in correct order",
   "main": "src/json-patch-ot-agent.js",
+  "type": "module",
   "typings": "index.d.ts",
   "scripts": {
-    "test": "jasmine test/spec/*.js"
+    "test": "node --experimental-modules jasmine-run.js"
   },
   "repository": {
     "type": "git",
