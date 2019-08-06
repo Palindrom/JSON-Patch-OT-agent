@@ -9,7 +9,7 @@ import { JSONPatchQueue } from 'json-patch-queue';
  * @param {Boolean} purity 
  * @constructor
  * @extends {JSONPatchQueue}
- * @version: 2.0.0-rc.0
+ * @version: 2.0.0-rc.1
  */
 var JSONPatchOTAgent = function(obj, transform, versionPaths, apply, purity){
 	JSONPatchQueue.call(this, obj, versionPaths, apply, purity);
