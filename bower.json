@@ -24,6 +24,6 @@
     "gruntfile.js"
   ],
   "dependencies":{
-    "json-patch-queue": "Palindrom/JSON-Patch-queue#master"
+    "json-patch-queue": ">=3.0.0-rc.1"
   }
 }

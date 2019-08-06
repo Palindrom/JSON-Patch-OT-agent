@@ -36,6 +36,6 @@
     "jasmine": "^3.4.0"
   },
   "dependencies": {
-    "json-patch-queue": "3.0.0-rc.0"
+    "json-patch-queue": ">=3.0.0-rc.1"
   }
 }
